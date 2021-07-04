@@ -55,9 +55,14 @@ export const SearchInput = styled.TextInput`
 
 export const ItemsArea = styled.View`
     flex: 1;
+    margin-top: 20px;
 `;
 
 export const Scroller = styled.ScrollView`
     flex: 1;
     padding: 20px;
+`;
+
+export const LoadingIcon = styled.ActivityIndicator`
+    margin-top: 20px;
 `;

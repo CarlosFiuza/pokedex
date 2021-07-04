@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     Container, 
     HeaderArea, 
@@ -9,12 +9,16 @@ import {
     SearchInput,
     ItemsArea,
     Scroller,
+    LoadingIcon,
      } from './styles';
+
+import PokemonBox from '../../components/PokemonBox';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { useNavigation } from '@react-navigation/native';
 
+import Api from '../../Api';
 
 
 export default () => {
@@ -22,6 +26,20 @@ export default () => {
     const navigation = useNavigation();
 
     const [searchText, setSearchText] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [pokemonList, setPokemonList] = useState([]);
+
+    const getPokedex = async () => {
+        let data = await Api.getPokedex();
+        setPokemonList([]);
+        setPokemonList(data['pokemon_species']);
+        setLoading(false);
+
+    };
+
+    useEffect(() => {
+        getPokedex()
+    }, []);
 
     return (
         <Container>
@@ -30,7 +48,7 @@ export default () => {
 
                 <PokedexTitle> Pokédex </PokedexTitle>
 
-                <FilterButton onPress={() => navigation.navigate('SplashScreen')}>
+                <FilterButton onPress={() => getPokedex()}>
                     <Icon name="hashtag" size={20} color="#000000"/>
                     <Icon name="long-arrow-up" size={20} color="#000000"/>
                 </FilterButton>
@@ -49,6 +67,10 @@ export default () => {
 
             <ItemsArea>
                 <Scroller>
+                    { loading && <LoadingIcon size="large" color="#000000"/>}
+                    {pokemonList.map((item, k) => (
+                        <PokemonBox key={k} data={item} />
+                    ))}
                 </Scroller>
             </ItemsArea>
 
