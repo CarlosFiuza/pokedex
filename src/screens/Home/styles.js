@@ -55,7 +55,7 @@ export const SearchInput = styled.TextInput`
 
 export const ItemsArea = styled.View`
     flex: 1;
-    margin-top: 20px;
+    margin-top: 10px;
 `;
 
 export const Scroller = styled.ScrollView`
@@ -65,4 +65,13 @@ export const Scroller = styled.ScrollView`
 
 export const LoadingIcon = styled.ActivityIndicator`
     margin-top: 20px;
+    alignSelf: center;
+`;
+
+export const Grid = styled.View`
+    flexDirection: row;
+    flexWrap: wrap;
+    alignContent: space-around;
+    justify-content: space-between;
+    marginBottom: 20px;
 `;
