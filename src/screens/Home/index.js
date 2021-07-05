@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
     Container, 
-    HeaderArea, 
+    HeaderArea,
+    TitleArea, 
     PokedexTitle,  
     PokeballIcon, 
     FilterButton,
@@ -29,6 +30,7 @@ export default () => {
     const [searchText, setSearchText] = useState('');
     const [loading, setLoading] = useState(true);
     const [pokemonList, setPokemonList] = useState([]);
+    const [searchList, setSearchList] = useState([]);
     const [filter, setFilter] = useState(true);
 
     const getPokedex = async () => {
@@ -37,6 +39,7 @@ export default () => {
         Object.keys(data['pokemon_species']).forEach(function(element) {
             let id = data['pokemon_species'][element].url.substring(42);
             id = id.slice(0, -1);
+            id = Number(id);
             list.push(factoryObjects(
                 data['pokemon_species'][element].name,
                 data['pokemon_species'][element].url,
@@ -55,7 +58,6 @@ export default () => {
 
     const orderId = () => {
         let data = pokemonList;
-        setLoading(true);
         if(filter){
             data.sort((a, b) => {
                 return a.id > b.id;
@@ -67,8 +69,28 @@ export default () => {
         }
         setPokemonList(data);
         setFilter(!filter);
-        setLoading(false);
     };
+
+    const searchPokemon = (text) => {
+        setSearchList([]);
+        if(text === ''){
+            return;
+        } else {
+            let list = pokemonList.filter(customFilter);
+
+        function customFilter(item) {
+            if(item.name.includes(text)){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        setSearchList(list);
+        }
+    };
+
+
 
     useEffect(() => {
         getPokedex()
@@ -77,9 +99,11 @@ export default () => {
     return (
         <Container>
             <HeaderArea>
-                <PokeballIcon source={require('../../assets/pokeball.png')} />
+                <TitleArea>
+                    <PokeballIcon source={require('../../assets/pokeball.png')} />
 
-                <PokedexTitle> Pokédex </PokedexTitle>
+                    <PokedexTitle> Pokédex </PokedexTitle>
+                </TitleArea>
 
                 <FilterButton onPress={() => orderId()}>
                     <Icon name="hashtag" size={20} color="#000000"/>
@@ -98,6 +122,7 @@ export default () => {
                     placeholder="Pesquisar"
                     value={searchText}
                     onChangeText={t=>setSearchText(t)}
+                    onSubmitEditing={()=> {searchPokemon(searchText)}}
                 />
             </SearchArea>
 
@@ -105,9 +130,13 @@ export default () => {
                 <Scroller>
                     { loading && <LoadingIcon size="large" color="#000000"/>}
                     <Grid>
-                        { pokemonList.map((items, k) => (
-                            <PokemonBox key={k} data={items}/>
-                        ))}
+                        {}
+                        {searchText === '' ? 
+                            pokemonList.map((items, k) => (
+                                <PokemonBox key={k} data={items}/>))
+                            : searchList.map((items, k) => (
+                                <PokemonBox key={k} data={items}/>))
+                        }
                     </Grid>
                 </Scroller>
             </ItemsArea>

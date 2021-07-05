@@ -13,22 +13,27 @@ export const HeaderArea = styled.View`
     justify-content: space-between;
 `;
 
+export const TitleArea = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`;
 export const PokeballIcon = styled.Image`
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     transform: rotate(39.5deg);
 `;
 
 export const PokedexTitle = styled.Text`
     font-family: Poppins;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
-    padding-left: 20px;
+    margin-left: 15px;
     color: #000000;
 `;
 
 export const FilterButton = styled.TouchableOpacity`
-    width: 20px;
+    width: 32px;
     height: 32px;
     flex-direction: row;
     align-items: center;
@@ -42,7 +47,7 @@ export const SearchArea = styled.View`
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-left: 20px;
     margin-right: 20px;
 `;

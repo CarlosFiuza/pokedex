@@ -11,8 +11,8 @@ export default {
         return json;
     },
 
-    getPokemon: async (name) => {
-        const request = await fetch(`${url}/pokemon/${name}/`)
+    getPokemon: async (id) => {
+        const request = await fetch(`${url}/pokemon/${id}/`)
             .catch(function(e) {
                 console.log('erro '+e);
             });
