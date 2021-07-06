@@ -3,8 +3,7 @@ import {
     Container, 
     HeaderArea,
     TitleArea, 
-    PokedexTitle,  
-    PokeballIcon, 
+    PokedexTitle, 
     FilterButton,
     SearchArea,
     SearchInput,
@@ -17,10 +16,11 @@ import {
 
 import PokemonBox from '../../components/PokemonBox';
 
+import PokeballIcon from '../../assets/pokeballIcon.svg';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Api from '../../Api';
-
 
 export default () => {
 
@@ -104,8 +104,7 @@ export default () => {
         <Container>
             <HeaderArea>
                 <TitleArea>
-                    <PokeballIcon source={require('../../assets/pokeball.png')} />
-
+                    <PokeballIcon width="24" height="24" />
                     <PokedexTitle> Pokédex </PokedexTitle>
                 </TitleArea>
 

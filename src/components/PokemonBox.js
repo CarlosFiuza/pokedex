@@ -6,6 +6,8 @@ import Api from '../Api';
 
 import {useWindowDimensions} from 'react-native';
 
+import { SvgUri } from 'react-native-svg';
+
 const Area = styled.TouchableOpacity`
     background-color: #FFFFFF;
     margin: 5px;
@@ -14,11 +16,6 @@ const Area = styled.TouchableOpacity`
     border: 1px solid ${props => props.color};
     align-items: center;
     justify-content: space-between;
-`;
-
-const PokemonImage = styled.Image`
-    flex: 1;
-    resizeMode: contain;
 `;
 
 const PokemonID = styled.Text`
@@ -62,7 +59,7 @@ export default ({data}) => {
 
     const getPokemonDetails = async (data) => {
         let color = await Api.getPokemonColor(data.id);
-        const image = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+data.id+'.png';
+        const image = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/'+data.id+'.svg';
         data['color'] = color['color'].name;
         data['image'] = image;
         setDetails(true);
@@ -95,12 +92,11 @@ export default ({data}) => {
             <PokemonID color={`${data.color}`}> {'#'+data.id} </PokemonID>
 
             {details && 
-                <PokemonImage source={{uri: `${data.image}`}}
-                    style={{
-                        width: windowWidth*0.24,
-                        height: windowWidth*0.25
-                    }}
-                />
+                <SvgUri width= {windowWidth*0.2}
+                        height= {windowWidth*0.18}
+                        resizeMode ="contain"
+                        uri= {data.image}
+                    />
             }
 
             <NameArea style={{

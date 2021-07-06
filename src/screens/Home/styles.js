@@ -18,11 +18,6 @@ export const TitleArea = styled.View`
     align-items: center;
     justify-content: space-between;
 `;
-export const PokeballIcon = styled.Image`
-    width: 26px;
-    height: 26px;
-    transform: rotate(39.5deg);
-`;
 
 export const PokedexTitle = styled.Text`
     font-family: Poppins;
