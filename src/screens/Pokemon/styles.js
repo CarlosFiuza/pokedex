@@ -44,3 +44,27 @@ export const LoadingIcon = styled.ActivityIndicator`
     margin-top: 20px;
     alignSelf: center;
 `;
+
+export const SwipeDot = styled.View`
+    background-color: ${props => props.color};
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin: 3px;
+`;
+
+export const SwipeItem = styled.View`
+    flex: 1;
+    background-color: ${props => props.color};
+    z-index: 10;
+`;
+
+export const DetailsArea = styled.View`
+    margin-top: ${props => props.marginTop + 'px'};
+    border-radius: 30px;
+    border: 20px solid ${props => props.color};
+    background-color: #FFFFFF;
+    flex: 1;
+    z-index: -1;
+    flex-direction: column;
+`;

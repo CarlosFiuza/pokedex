@@ -9,13 +9,22 @@ import Api from '../../Api';
 
 import {useWindowDimensions} from 'react-native';
 
+import Swiper from 'react-native-swiper';
+
+import { SvgUri } from 'react-native-svg';
+
+import PokeballBackground from '../../assets/pokeball.svg';
+
 import { Container,
          HeaderArea,
          TitleArea,
          ArrorBackButton,
          Title,
          Id,
-         LoadingIcon } from './styles';
+         LoadingIcon,
+         SwipeDot,
+         SwipeItem,
+         DetailsArea } from './styles';
 
 export default () => {
 
@@ -41,11 +50,20 @@ export default () => {
 
     const getPokemonDetails = async () => {
         let data = await Api.getPokemon(info.id);
+        let images = [];
+        images.push(info.image);
+        for (let element in data['sprites']){
+            if(data['sprites'][element] != null){
+                if(element != 'versions' && element != 'other'){
+                    images.push(data['sprites'][element]);
+                }
+            }
+        }
         setInfo({
             name: info.name,
             id: info.id,
             color: info.color,
-            images: data['sprites'],
+            images: images,
             types: data['types'],
             abilities: data['abilities'],
             height: data['height'],
@@ -63,32 +81,59 @@ export default () => {
         getPokemonDetails();
     }, [])
 
-    useEffect(() => {
-        if(Object.keys(info).length === 14){
-            setIsReady(true);
-        }
-    }, [info.images])
-
     return (
         <Container color={info.color}>
-           <HeaderArea>
-                <TitleArea>
-                    <ArrorBackButton onPress={navigateBack}>
-                        <Icon name="arrow-left" size={32} color="#FFFFFF"/>
-                        </ArrorBackButton>
-                    <Title> {info.name} </Title>
-                </TitleArea>
-                <Id> {'#' + info.id} </Id>
-            </HeaderArea>
-            {isReady && <Image source={{uri: `${info.images.back_default}`}}
-                    style={{
-                        width: windowWidth, 
-                        height: windowHeight, 
-                        resizeMode: "contain",}} 
-                        />}
+            <HeaderArea>
+                    <TitleArea>
+                        <ArrorBackButton onPress={navigateBack}>
+                            <Icon name="arrow-left" size={32} color="#FFFFFF"/>
+                            </ArrorBackButton>
+                        <Title> {info.name} </Title>
+                    </TitleArea>
+                    <Id> {'#' + info.id} </Id>
+                </HeaderArea>
 
-            {!isReady && <LoadingIcon size="large" color="#000000"/>}
-        
+            {info.images && Object.keys(info.images).length > 0 ?
+                <Swiper
+                    style={{height: windowHeight * 0.33}}
+                    dot={<SwipeDot color='#FFFFFF'/>}
+                    activeDot={<SwipeDot color='#000000'/>}
+                    paginationStyle={{top: 15, right: 15, bottom: null, left: null}}
+                    autoplay={true}
+                    >
+
+                    {info.images.map((element, key) => (
+                            <SwipeItem key={key} color={info.color}>
+                                {element.slice(-3) != 'svg' ?
+                                    <Image source={{uri: `${element}`}}
+                                        style={{
+                                            width: '100%', 
+                                            height: windowHeight * 0.25, 
+                                            resizeMode: "contain",
+                                        }}
+                                        />
+                                    :
+                                    <SvgUri width='100%'
+                                        height= {windowHeight * 0.25}
+                                        resizeMode ="contain"
+                                        uri= {element}
+                                        position = 'absolute'
+                                    />
+
+                                    }
+                            </SwipeItem>
+                    ))}
+                </Swiper>
+                : 
+                <LoadingIcon size="large" color="#000000"/>
+                }
+                
+            <PokeballBackground width="100%" height="208" position='absolute' alignSelf="flex-end"/>
+
+            <DetailsArea color={info.color} marginTop={windowHeight * -0.5}>
+                <LoadingIcon size="large" color="#000000"/>
+            </DetailsArea>
+  
         </Container>
     );
 }
