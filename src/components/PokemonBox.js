@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 import Api from '../Api';
@@ -42,32 +43,43 @@ const NameArea = styled.View`
     font-weight: 400;
 `;
 
-export const LoadingIcon = styled.ActivityIndicator`
+const LoadingIcon = styled.ActivityIndicator`
     margin-top: 20px;
     alignSelf: center;
 `;
 
 export default ({data}) => {
 
+    const navigation = useNavigation();
+
     const windowWidth = useWindowDimensions().width;
     const windowHeight = useWindowDimensions().height;
 
-    const [details, setDetails] = useState({});
+    const [details, setDetails] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    const getPokemonDetails = async () => {
-        let response = await Api.getPokemon(data.id);
-        let specie = await Api.getPokemonColor(response.species.name);
-        await setDetails({
-            name: response.name,
-            color: specie.color.name,
-            id: response.id,
-            image: response.sprites.front_default});
-        setLoading(false);
+    const [pokemonDetails, setPokemonDetails] = useState([]);
+
+    const getPokemonDetails = async (data) => {
+        let color = await Api.getPokemonColor(data.id);
+        const image = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+data.id+'.png';
+        data['color'] = color['color'].name;
+        data['image'] = image;
+        setDetails(true);
+
+    };
+
+    const onClick = () => {
+        navigation.navigate("Pokemon", {
+            name: data.name,
+            id: data.id,
+            image: data.image,
+            color: data.color,
+        });
     };
 
     useEffect(() => {
-        getPokemonDetails(data.name),
+        getPokemonDetails(data),
         setLoading(true)
     }, [data.id]);
 
@@ -76,21 +88,27 @@ export default ({data}) => {
             width: windowWidth*0.25, 
             height: windowWidth*0.27
             }}
-            color={details.color}>
+            onPress={onClick}
+            color={data.color}>
+            {!details && <LoadingIcon size="large" color="#000000"/>}
 
-            <PokemonID color={`${details.color}`}> {'#'+details.id} </PokemonID>
-            {loading && <LoadingIcon size="large" color="#000000"/>}
-            <PokemonImage source={{uri: `${details.image}`}}
-                style={{
-                    width: windowWidth*0.24,
-                    height: windowWidth*0.25
-                }}
-            />
+            <PokemonID color={`${data.color}`}> {'#'+data.id} </PokemonID>
+
+            {details && 
+                <PokemonImage source={{uri: `${data.image}`}}
+                    style={{
+                        width: windowWidth*0.24,
+                        height: windowWidth*0.25
+                    }}
+                />
+            }
+
             <NameArea style={{
-                width: windowWidth*0.25, 
-                }}
-                color={`${details.color}`}>
-                <PokemonName color={`${details.color}`}> {details.name} </PokemonName> 
+                width: windowWidth*0.25}}
+                color={`${data.color}`}>
+
+                <PokemonName color={`${data.color}`}> {data.name} </PokemonName> 
+                
             </NameArea>
         </Area>
     );
