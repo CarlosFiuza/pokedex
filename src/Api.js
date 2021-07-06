@@ -20,8 +20,8 @@ export default {
         return json;
     },
 
-    getPokemonColor: async (name) => {
-        const request = await fetch(`${url}/pokemon-species/${name}/`)
+    getPokemonColor: async (id) => {
+        const request = await fetch(`${url}/pokemon-species/${id}/`)
             .catch(function(e) {
                 console.log('erro '+e);
             });
