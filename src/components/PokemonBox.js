@@ -60,7 +60,13 @@ export default ({data}) => {
     const getPokemonDetails = async (data) => {
         let color = await Api.getPokemonColor(data.id);
         const image = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/'+data.id+'.svg';
-        data['color'] = color['color'].name;
+        if(color['color'].name === 'white') {
+            data['color'] = '#D3D3D3';
+        } else if (color['color'].name === 'yellow') {
+            data['color'] = '#FFD700';
+        } else{
+            data['color'] = color['color'].name;
+        }
         data['image'] = image;
         setDetails(true);
 
