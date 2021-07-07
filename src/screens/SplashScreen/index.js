@@ -8,7 +8,7 @@ export default () => {
 
     useEffect(() => {
         return (
-            setTimeout(() => { navigation.navigate('Home') }, 3000)
+            setTimeout(() => { navigation.replace('Home') }, 3000)
         );
     }, []);
 
