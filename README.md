@@ -1,5 +1,5 @@
 <div align="center">
-	<img width=40% src="https://raw.githubusercontent.com/CarlosFiuza/pokedex/main/src/assets/pokedex_logo.png" alt="pokedex logo" class="lg">
+	<img width=40% src="/src/assets/pokedex_logo.png" alt="pokedex logo" class="lg">
 </div>
 <h1 align="center"> PokéDex </h1>
 
