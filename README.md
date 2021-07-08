@@ -1,7 +1,6 @@
 <div align="center">
-	<img width=40% src="https://raw.githubusercontent.com/CarlosFiuza/pokedex/main/src/assets/pokedex_logo.png" alt="Vamos Cuidar" class="lg">
+	<img width=40% src="https://raw.githubusercontent.com/CarlosFiuza/pokedex/main/src/assets/pokedex_logo.png" alt="pokedex logo" class="lg">
 </div>
-
 <h1 align="center"> PokéDex </h1>
 
 
@@ -41,12 +40,12 @@ $ cd pokedex/
 ```
 
 ### Pré-Requisitos para executar em ambiente de desenvolvimento
-|Tecnologia|Descrição|
-|-|-|
-|Git|-|
-|Java(JDK)|-|
-|Android Studio ou smartphone android|-|
-|Node js|-|
+|Tecnologia|
+|-|
+|Git|
+|Java(JDK)|
+|Android Studio ou smartphone android|
+|Node js|
 ```bash 
 # Clone o repositório
 $ git clone https://github.com/CarlosFiuza/pokedex.git
@@ -65,14 +64,14 @@ $ npx react-native run-android
 ```
 ## Experiência e feedback do desafio
 
-<p align="justify">&emsp; &emsp; Inicialmente fiquei muito empolgado e com receio de participar do desafio, não possuía conhecimento em react-native e apenas o básico em javascript, então desde o início foi realmente um desafio. Mas apesar disso vi uma grande oportunidade de testar minhas habilidades e minha capacidade, então entrei de cabeça. </p>
+- Inicialmente fiquei muito empolgado e com receio de participar do desafio, não possuía conhecimento em react-native e apenas o básico em javascript, então desde o início foi realmente um desafio. Mas apesar disso vi uma grande oportunidade de testar minhas habilidades e minha capacidade, então entrei de cabeça.
 
-<p align="justify">&emsp; &emsp; Estudei e procurei todos os principios básicos para se criar um projeto em react-native, e percebi que existe uma certa similaridade no desenvolvimento do layout de tela com o flutter, framework que usei para o desenvolvimento mobile anteriormente. Isso ajudou na construção do desenho da tela seguindo o protótipo de alta fidelidade. </p>
+- Estudei e procurei todos os principios básicos para se criar um projeto em react-native, e percebi que existe uma certa similaridade no desenvolvimento do layout de tela com o flutter, framework que usei para o desenvolvimento mobile anteriormente. Isso ajudou na construção do desenho da tela seguindo o protótipo de alta fidelidade.
 
-<p align="justify">&emsp; &emsp; Depois disso foi necessário entender as características do react, como se comportava a renderização da tela, navegação entre telas e principalmente como os hooks funcionam e de que forma usá-los. </p>
+- Depois disso foi necessário entender as características do react, como se comportava a renderização da tela, navegação entre telas e principalmente como os hooks funcionam e de que forma usá-los.
 
-<p align="justify">&emsp; &emsp; Com esse conhecimento adquirido segui com o desenvolvimento do projeto, a cada dia ficava mais fácil e rápido o desenvolvimento das features. </p>
+- Com esse conhecimento adquirido segui com o desenvolvimento do projeto, a cada dia ficava mais fácil e rápido o desenvolvimento das features.
 
-<p align="justify">&emsp; &emsp; Indo além do que estava proposto no protótipo criei uma splash screen para o aplicativo, com o intuito de já carregar algumas informações antes de ir para a Home do app e torná-lo mais bonito.</p>
+- Indo além do que estava proposto no protótipo criei uma splash screen para o aplicativo, com o intuito de já carregar algumas informações antes de ir para a Home do app e torná-lo mais bonito.
 
-<p align="justify">&emsp; &emsp; Ao final do projeto fiquei muito feliz com o projeto desenvolvido, a interface ficou quase 100% fiel ao protótipo, todas as features além de uma extra foram implementadas e isso no prazo de apenas 5 dias.</p>
+- Ao final do projeto fiquei muito feliz com o projeto desenvolvido, a interface ficou quase 100% fiel ao protótipo, todas as features além de uma extra foram implementadas e isso no prazo de apenas 5 dias.
