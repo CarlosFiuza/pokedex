@@ -11,6 +11,7 @@ import { SvgUri } from 'react-native-svg';
 const Area = styled.TouchableOpacity`
     background-color: #FFFFFF;
     margin: 5px;
+    margin-bottom: 5px;
     border-radius: 8px;
     flex-direction: column;
     border: 1px solid ${props => props.color};
@@ -19,16 +20,18 @@ const Area = styled.TouchableOpacity`
 `;
 
 const PokemonID = styled.Text`
+    font-family: Poppins;
     color: ${props => props.color};
     font-family: Poppins;
-    font-size: 16px;
+    font-size: 8px;
     alignSelf: flex-end;
 `;
 
 const PokemonName = styled.Text`
+    font-family: Poppins;
     color: #FFFFFF;
     font-family: Poppins;
-    font-size: 14px;
+    font-size: 12px;
 `;
 
 const NameArea = styled.View`
@@ -81,6 +84,14 @@ export default ({data}) => {
         });
     };
 
+    const addZeros = (number) => {
+        let num = number.toString();
+        while(num.length < 3){
+            num = '0' + num;
+        }
+        return num;
+    };
+
     useEffect(() => {
         getPokemonDetails(data),
         setLoading(true)
@@ -95,7 +106,7 @@ export default ({data}) => {
             color={data.color}>
             {!details && <LoadingIcon size="large" color="#000000"/>}
 
-            <PokemonID color={`${data.color}`}> {'#'+data.id} </PokemonID>
+            <PokemonID color={`${data.color}`}> {'#'+addZeros(data.id)} </PokemonID>
 
             {details && 
                 <SvgUri width= {windowWidth*0.2}
@@ -105,9 +116,7 @@ export default ({data}) => {
                     />
             }
 
-            <NameArea style={{
-                width: windowWidth*0.25}}
-                color={`${data.color}`}>
+            <NameArea style={{width: windowWidth*0.25}} color={`${data.color}`}>
 
                 <PokemonName color={`${data.color}`}> {data.name} </PokemonName> 
                 
