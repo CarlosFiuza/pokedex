@@ -7,6 +7,7 @@ import {
     FilterButton,
     SearchArea,
     SearchInput,
+    EraseButton,
     ItemsArea,
     Scroller,
     LoadingIcon,
@@ -17,53 +18,35 @@ import {
 import PokemonBox from '../../components/PokemonBox';
 
 import PokeballIcon from '../../assets/pokeballIcon.svg';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
+import AtoZIcon from '../../assets/aToZ.svg';
+import ArrowDownIcon from '../../assets/arrowDown.svg';
+import HashtagIcon from '../../assets/hashtag.svg';
+import DeleteIcon from '../../assets/delete.svg';
+import SearchIcon from '../../assets/search.svg';
 
 import Api from '../../Api';
 
+import {useRoute} from '@react-navigation/native';
+
 export default () => {
+
+    const route = useRoute();
 
     const [searchText, setSearchText] = useState('');
     const [isSearching, setIsSearching] = useState(false);
     const [notFound, setNotFound] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [pokemonList, setPokemonList] = useState([]);
+    const [pokemonList, setPokemonList] = useState(route.params.data);
     const [searchList, setSearchList] = useState([]);
     const [filter, setFilter] = useState(false);
 
-    const getPokedex = async () => {
-        let data = await Api.getPokedex();
-        let list = [{}];
-        data['pokemon_species'].map((element, key) => {
-            let id = element.url.substring(42);
-            id = id.slice(0, -1);
-            id = Number(id);  
-            list.push(factoryObjects(
-                element.name,
-                element.url,
-                id,
-                null,
-                null
-            )); 
-        });
-        list.shift();
-        setLoading(false);
-        setPokemonList(list);
-    };
-
-    const factoryObjects = (name, url, id, color, image) => {
-        return { name, url, id, color, image};
-    };
-
-    const sortId = (data) => {
+    const sortList = (data) => {
         if(filter){
             data.sort((a, b) => {
                 return a.id > b.id;
             });
         } else {
             data.sort((a, b) => {
-                return a.id < b.id;
+                return a.name > b.name;
             });
         }
         setFilter(!filter);
@@ -88,15 +71,15 @@ export default () => {
         }
     };
 
-    useEffect(() => {
-        getPokedex()
-    }, []);
+    const ClearSearchInput = () => {
+        setIsSearching(false);
+        setNotFound(false)
+        setSearchText('');
+    };
 
     useEffect(() => {
         if(isSearching){
             Object.keys(searchList).length < 1 ? setNotFound(true) : setNotFound(false);
-        } else {
-            setNotFound(false);
         }
     }, [searchList]);
 
@@ -110,33 +93,39 @@ export default () => {
 
                 <FilterButton onPress={() => 
                     isSearching ? 
-                        setSearchList(sortId(searchList))
-                        : setPokemonList(sortId(pokemonList))
+                        setSearchList(sortList(searchList))
+                        : setPokemonList(sortList(pokemonList))
                     }>
-                    <Icon name="hashtag" size={20} color="#000000"/>
 
                     {filter ?
-                        <Icon name="long-arrow-down" size={20} color="#000000"/>
-                        : <Icon name="long-arrow-up" size={20} color="#000000"/>
+                        <AtoZIcon width='6' height='16' />
+                        : <HashtagIcon width='9' height='16' />
                     }
+
+                    <ArrowDownIcon widht='9' height='16'/>
                 </FilterButton>
 
             </HeaderArea>
 
             <SearchArea>
 
-                <Icon name="search" size={15} color="#666666"/>
+                <SearchIcon width='24' height='12' />
                 <SearchInput 
                     placeholder="Pesquisar"
                     value={searchText}
                     onChangeText={t=>setSearchText(t)}
                     onSubmitEditing={()=> { searchPokemon(searchText) }}
                 />
+                {isSearching &&
+                    <EraseButton onPress={() => ClearSearchInput()}>
+                        <DeleteIcon height='12' widht ='12' />
+                    </EraseButton>
+                }
+
             </SearchArea>
 
             <ItemsArea>
                 <Scroller>
-                    { loading && <LoadingIcon size="large" color="#000000"/>}
                     { notFound && <NotFoundText> Nenhum resultado para sua pesquisa! </NotFoundText> }
                      <Grid>
                         { isSearching ? 
