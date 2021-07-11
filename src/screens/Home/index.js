@@ -11,9 +11,10 @@ import {
     ItemsArea,
     Scroller,
     LoadingIcon,
-    Grid,
     NotFoundText
      } from './styles';
+
+import {FlatList} from 'react-native';
 
 import PokemonBox from '../../components/PokemonBox';
 
@@ -125,17 +126,20 @@ export default () => {
             </SearchArea>
 
             <ItemsArea>
-                <Scroller>
-                    { notFound && <NotFoundText> Nenhum resultado para sua pesquisa! </NotFoundText> }
-                     <Grid>
-                        { isSearching ? 
-                            searchList.map((items, k) => (
-                                <PokemonBox key={items.id} data={items}/>))
-                            : pokemonList.map((items, k) => (
-                                <PokemonBox key={items.id} data={items}/>))
-                        }
-                    </Grid>
-                </Scroller>
+                { notFound && <NotFoundText> Nenhum resultado para sua pesquisa! </NotFoundText> }
+                <FlatList
+                    data={isSearching ? searchList : pokemonList}
+                    renderItem={({item}) => (<PokemonBox data={item} />)}
+                    keyExtractor={item => item.id}
+                    numColumns={3}
+                    columnWrapperStyle={{
+                        justifyContent: 'space-between',
+                        alignContent: 'center',
+                        marginHorizontal: 18,
+                        alignItems: 'center'
+                    }}>
+                </FlatList>
+
             </ItemsArea>
 
         </Container>

@@ -76,15 +76,6 @@ export const LoadingIcon = styled.ActivityIndicator`
     alignSelf: center;
 `;
 
-export const Grid = styled.View`
-    flexDirection: row;
-    flexWrap: wrap;
-    alignContent: flex-start;
-    align-items: flex-start;
-    justify-content: space-between;
-    marginBottom: 20px;
-`;
-
 export const NotFoundText = styled.Text`
     font-family: Poppins;
     font-size: 18px;
